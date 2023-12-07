@@ -63,7 +63,7 @@ class PostController extends Controller
         }
           Notification::send($admin, new PostCreated($post));
 
-        return $this->success('post created', $post);
+        return $this->success('post created', $request->hasFile('photo'));
 
     }
 
@@ -84,7 +84,7 @@ class PostController extends Controller
     {
         $this->authorize('update', $post);
 
-          if($request->hasFile('photo')){
+          if($request->file('photo')){
           if(isset($post->photos()->get()[0]->url)){
              Storage::delete($post->photos()->get()[0]->url);
              $post->photos()->delete();
@@ -93,13 +93,9 @@ class PostController extends Controller
              $post->photos()->create(['url'=> $path]);
            }
 
-        $post->update([
-            'title'=>$request->title,
-            'description'=>$request->description,
-            'content'=>$request->content,
-        ]);
+        $post->update($request->validated());
 
-        return $this->success('post updated', $post);
+        return $this->success('post updated', $request->hasFile('photo'));
 
     }
 
