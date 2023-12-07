@@ -17,22 +17,30 @@ class UserSeeder extends Seeder
     {
 
        $admin = User::create([
-           'username'=> 'Molly',
+           'username'=> 'Milena',
            'email' => 'molly@mail.ru',
             'password' => Hash::make('secret'),
         ]);
 
        $admin->roles()->attach(1);
+       
+       $user = User::create([
+           'username'=> 'Billy',
+           'email' => 'mike@mail.ru',
+            'password' => Hash::make('12345678'),
+        ]);
+
+       $user->roles()->attach(2);
 
        User::factory()->count(4)->hasAttached(Role::find(2))->create();
 
-           $admin2 = User::create([
+           $creator = User::create([
            'username'=> 'Sarvar',
            'email' => 's@mail.ru',
             'password' => Hash::make('string'),
         ]);
 
-       $admin2->roles()->attach(1);
-       $admin2->roles()->attach(3);
+       $creator->roles()->attach(1);
+       $creator->roles()->attach(3);
     }
 }

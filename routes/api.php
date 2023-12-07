@@ -26,7 +26,6 @@ use Illuminate\Support\Facades\Route;
 */
 
 
-
 Route::post('login', [AuthController::class, 'login'])->middleware('throttle:3');
 Route::post('logout', [AuthController::class, 'logout']);
 Route::post('register', [AuthController::class, 'register']);
@@ -46,3 +45,4 @@ Route::apiResources([
    'notifications' => NotificationController::class,
    'categories.products' => CategoryProductController::class,
 ]);
+

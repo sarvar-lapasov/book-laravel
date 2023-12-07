@@ -50,7 +50,7 @@ class PostController extends Controller
 
 
         if($request->file('photo')){
-        
+
             $path = $request->file('photo')->store('post-photos');
             $post->photos()->create(['url'=> $path]);
           }
@@ -76,7 +76,7 @@ class PostController extends Controller
 
     }
 
-  
+
     /**
      * Update the specified resource in storage.
      */
@@ -84,21 +84,21 @@ class PostController extends Controller
     {
         $this->authorize('update', $post);
 
-        //  if($request->hasFile('photo')){
-        //  if(isset($post->photos()->get()[0]->url)){
-        //     Storage::delete($post->photos()->get()[0]->url);
-        //     $post->photos()->delete();
-        // }
-        //     $path = $request->file('photo')->store('post-photos');
-        //     $post->photos()->create(['url'=> $path]);
-        //   }
-        
+          if($request->hasFile('photo')){
+          if(isset($post->photos()->get()[0]->url)){
+             Storage::delete($post->photos()->get()[0]->url);
+             $post->photos()->delete();
+         }
+             $path = $request->file('photo')->store('post-photos');
+             $post->photos()->create(['url'=> $path]);
+           }
+
         $post->update([
             'title'=>$request->title,
             'description'=>$request->description,
             'content'=>$request->content,
         ]);
-        
+
         return $this->success('post updated', $post);
 
     }
@@ -114,9 +114,9 @@ class PostController extends Controller
             Storage::delete($post->photos()->get()[0]->url);
             $post->photos()->delete();
         }
-        
+
         $post->delete();
-     
+
         return $this->success('post deleted', $post);
     }
 }
