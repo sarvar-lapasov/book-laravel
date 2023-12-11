@@ -49,7 +49,7 @@ class ProductController extends Controller
             $path = $request->file('photo')->store('product-photos');
             $product->photos()->create(['url'=> $path]);
           }
-        
+
 
         return $this->success('product created', $product);
     }
@@ -67,8 +67,8 @@ class ProductController extends Controller
      * Update the specified resource in storage.
      */
     public function update(UpdateProductRequest $request, Product $product)
-    { 
-         $this->authorize('update', $product); 
+    {
+         $this->authorize('update', $product);
 
 
         //  if($request->hasFile('photo')){
@@ -87,8 +87,8 @@ class ProductController extends Controller
             'price'=>$request->price,
         ]);
 
-    
-        
+
+
         return $this->success('product updated', $product);
     }
 
@@ -103,9 +103,9 @@ class ProductController extends Controller
             Storage::delete($product->photos()->get()[0]->url);
             $product->photos()->delete();
         }
-        
+
         $product->delete();
-     
+
         return $this->success('product deleted', $product);
     }
 }

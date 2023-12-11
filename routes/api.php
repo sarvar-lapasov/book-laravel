@@ -30,11 +30,12 @@ Route::post('login', [AuthController::class, 'login'])->middleware('throttle:3')
 Route::post('logout', [AuthController::class, 'logout']);
 Route::post('register', [AuthController::class, 'register']);
 Route::post('change-password', [AuthController::class, 'changePassword']);
-Route::get('user', [AuthController::class, 'user'])->middleware("auth:sanctum");
 
+Route::get('user', [AuthController::class, 'user'])->middleware("auth:sanctum");
 
 Route::get('notifications/{notification}/read', [NotificationController::class, 'read'])->name('notifications.read');
 
+Route::group(['middleware' => 'cors'], function () {
 Route::apiResources([
    'users' => UserController::class,
    'posts' => PostController::class,
@@ -45,4 +46,5 @@ Route::apiResources([
    'notifications' => NotificationController::class,
    'categories.products' => CategoryProductController::class,
 ]);
+});
 
